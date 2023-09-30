@@ -6,8 +6,8 @@ interface Props
     HTMLButtonElement
   > {
   text?: string;
-  startIcon?: JSX.Element | React.ReactNode;
-  endIcon?: JSX.Element | React.ReactNode;
+  startIcon?: React.JSX.Element | React.ReactNode;
+  endIcon?: React.JSX.Element | React.ReactNode;
   variant?: "filled" | "outlined" | "text";
   color?: "primary" | "secondary";
 }

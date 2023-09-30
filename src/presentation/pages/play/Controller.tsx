@@ -7,15 +7,16 @@ import { useState } from "react";
 enum State {
   PLAYING = "PLAYING",
   CALCULATING = "CALCULATING",
-  YOU_WIN = "YOU_WIN",
-  YOU_LOOSE = "YOU_LOOSE",
+  FINISHED = "FINISHED",
 }
 
 type Choice = "ROCK" | "PAPER" | "SCISSORS" | "NONE";
+type Result = "YOU_WIN" | "YOU_LOOSE" | "DRAW" | "NONE";
 
 const Controller = () => {
   const [gameState, setGameState] = useState<State>(State.PLAYING);
   const [choice, setChoice] = useState<Choice>("NONE");
+  const [matchResult, setMatchResult] = useState<Result>("NONE");
   // const { id } = useParams();
   const handleChoice = (choice: Choice) => {
     setChoice(choice);
@@ -23,13 +24,19 @@ const Controller = () => {
 
   const executePlay = () => {
     setGameState(State.CALCULATING);
-    console.log("Criando sala...");
     setTimeout(() => {
-      setGameState(State.YOU_WIN);
-      setChoice("NONE");
+      setGameState(State.FINISHED);
+      setMatchResult("DRAW");
     }, 2000);
 
     console.log(gameState);
+  };
+
+  const getIcon = () => {
+    if (choice === "ROCK") return <Rock />;
+    if (choice === "PAPER") return <Paper />;
+    if (choice === "SCISSORS") return <Scissors />;
+    return null;
   };
 
   return (
@@ -73,27 +80,49 @@ const Controller = () => {
       {gameState === State.CALCULATING && (
         <Loading text="Aguardando adversário" />
       )}
-      {gameState === State.YOU_WIN && (
-        <div className="play__result">
-          <h3>Você ganhou</h3>
-          <Button
-            text="Jogar novamente"
-            color="primary"
-            variant="outlined"
-            endIcon={<Reset />}
-            onClick={() => setGameState(State.PLAYING)}
-          />
-        </div>
-      )}
-      {gameState === State.YOU_LOOSE && (
+      {gameState === State.FINISHED && (
         <>
-          <h3>Você perdeu</h3>
+          <div className="play__result">
+            {matchResult === "YOU_WIN" && (
+              <h3 className="play__result__win">Você ganhou</h3>
+            )}
+            {matchResult === "YOU_LOOSE" && (
+              <h3 className="play__result__loose">Você perdeu</h3>
+            )}
+            {matchResult === "DRAW" && (
+              <h3 className="play__result__draw">Empate</h3>
+            )}
+          </div>
+          <div>
+            <div className="play__result__checkout">
+              <span>Você</span>
+              <Button
+                className="play__result__checkout__button"
+                color="primary"
+                variant="outlined"
+                endIcon={getIcon()}
+              />
+            </div>
+            <div className="play__result__checkout">
+              <h4>Jogador 2</h4>
+              <Button
+                className="play__result__checkout__button"
+                color="primary"
+                variant="outlined"
+                endIcon={getIcon()}
+              />
+            </div>
+          </div>
           <Button
+            className="play__result__checkout__reset"
             text="Jogar novamente"
             color="primary"
             variant="outlined"
             endIcon={<Reset />}
-            onClick={() => setGameState(State.PLAYING)}
+            onClick={() => {
+              setGameState(State.PLAYING);
+              setChoice("NONE");
+            }}
           />
         </>
       )}

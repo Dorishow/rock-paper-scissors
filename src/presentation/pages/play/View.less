@@ -5,10 +5,42 @@
   width: 100vw;
 
   &__result {
-    display: flex;
-    flex-direction: column;
     text-align: center;
-    gap: 16px;
+    font-size: xx-large;
+    margin-bottom: 16px;
+
+    &__win {
+      color: @color-success;
+    }
+    &__loose {
+      color: @color-error;
+    }
+    &__draw {
+      color: @color-gray4;
+    }
+
+    &__checkout {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 13px;
+      font-size: large;
+
+      &__button {
+        aspect-ratio: 1;
+        border-radius: 30% !important;
+        cursor: default !important;
+
+        &:hover {
+          -webkit-animation: wobble-hor-bottom 1s both;
+          animation: wobble-hor-bottom 1s both;
+        }
+      }
+
+      &__reset {
+        margin-top: 16px;
+      }
+    }
   }
 
   &__buttons {
