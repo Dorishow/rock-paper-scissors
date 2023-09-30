@@ -1,0 +1,54 @@
+.input {
+  &__wrapper {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  &__label {
+    &__text {
+      color: @color-gray4;
+      padding: 4px;
+      transition: all 0.3s ease;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: medium;
+      font-weight: @font-weight;
+    }
+  }
+  &__field {
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid @color-gray3;
+    color: @color-gray5;
+    background-color: transparent;
+    font-weight: normal;
+
+    &::placeholder {
+      color: transparent;
+    }
+
+    &:focus ~ .input__label > span,
+    &:not(:placeholder-shown) ~ .input__label > span {
+      top: -12px;
+      left: 15px;
+      background-color: @color-gray1;
+      display: block;
+      font-size: 12px;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px @color-gray1 inset !important;
+    }
+  }
+  &__error {
+    display: block;
+    margin-bottom: 10px;
+    color: @color-error;
+    font-size: small;
+  }
+}

@@ -1,0 +1,80 @@
+@import (css)
+  url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;600;900&display=swap");
+@import url("./media-queries.less");
+
+// COLORS
+:root {
+  --primary: #0585fb;
+  --primary-dark: #0585fb;
+  --secondary: #ffc02f;
+  --success: #00d777;
+  --error: #ff2d6f;
+  --error-dark: #e62663;
+  --error-light: #e6266338;
+  --primary-contrast: #fcfcfe;
+
+  --gray1: #fcfcfe;
+  --gray2: #f8f8fa;
+  --gray3: #d9d9d9;
+  --gray4: #b4b4b4;
+  --gray5: #12262d;
+
+  --font-weight: 400;
+}
+
+:root[data-theme="theme-light"] {
+  --gray1: #fcfcfe;
+  --gray2: #f8f8fa;
+  --gray3: #d9d9d9;
+  --gray4: #b4b4b4;
+  --gray5: #12262d;
+}
+
+:root[data-theme="theme-dark"] {
+  --gray1: #000000;
+  --gray2: #212121;
+  --gray3: #303030;
+  --gray4: #424242;
+  --gray5: #999999;
+}
+
+@color-gray1: var(--gray1);
+@color-gray2: var(--gray2);
+@color-gray3: var(--gray3);
+@color-gray4: var(--gray4);
+@color-gray5: var(--gray5);
+
+@color-primary: var(--primary);
+@color-primary-contrast: var(--primary-contrast);
+@color-primary-dark: var(--primary-dark);
+@color-secondary: var(--secondary);
+@color-success: var(--success);
+@color-error: var(--error);
+@color-error-dark: var(--error-dark);
+@color-error-light: var(--error-light);
+
+@font-weight: var(--font-weight);
+
+// GLOBAL_STYLES
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Montserrat", sans-serif;
+}
+body {
+  background-color: @color-gray1;
+  color: @color-gray5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  display: block;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: normal;
+}

@@ -1,0 +1,84 @@
+.button {
+  &__element {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    place-content: center;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: @font-weight;
+    cursor: pointer;
+    width: 100%;
+    background-color: transparent;
+    text-align: center;
+    align-items: center;
+
+    &.filled-primary,
+    &.filled-secondary {
+      color: @color-primary-contrast;
+    }
+
+    &.filled-primary {
+      background-color: @color-primary;
+      &:hover {
+        background-color: @color-primary-dark;
+      }
+    }
+
+    &.filled-secondary {
+      background-color: @color-error;
+      &:hover {
+        background-color: @color-error-dark;
+      }
+    }
+
+    &.outlined-primary,
+    &.filled-primary {
+      border: 2px solid @color-primary;
+      &:hover {
+        border: 2px solid @color-primary-dark;
+      }
+    }
+
+    &.outlined-secondary,
+    &.filled-secondary {
+      border: 2px solid @color-error;
+      &:hover {
+        border: 2px solid @color-error-dark;
+      }
+    }
+
+    &.outlined-primary,
+    &.text-primary {
+      color: @color-primary;
+      &:hover {
+        background-color: @color-gray2;
+        outline: @color-primary solid 1px;
+      }
+      &:active {
+        outline: @color-primary solid 1px;
+      }
+    }
+    &.outlined-secondary,
+    &.text-secondary {
+      color: @color-error;
+      outline: @color-secondary solid 1px;
+      &:hover {
+        background-color: @color-gray2;
+      }
+      &:active {
+        outline: @color-secondary solid 1px;
+      }
+    }
+  }
+}
+
+.disabled-button {
+  cursor: not-allowed;
+  background-color: @color-gray4 !important;
+  border: 2px @color-gray4 !important;
+  &:hover {
+    background-color: @color-gray2;
+  }
+}
