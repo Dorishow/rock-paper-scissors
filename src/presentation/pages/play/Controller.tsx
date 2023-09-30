@@ -2,35 +2,12 @@
 
 import { Button, Loading } from "@presentation/components";
 import { Rock, Paper, Scissors, Reset } from "@presentation/components/Icons";
+import { GameState, PlayerChoice, useGame } from "@presentation/context/game";
 import { useState } from "react";
 
-enum State {
-  PLAYING = "PLAYING",
-  CALCULATING = "CALCULATING",
-  FINISHED = "FINISHED",
-}
-
-type Choice = "ROCK" | "PAPER" | "SCISSORS" | "NONE";
-type Result = "YOU_WIN" | "YOU_LOOSE" | "DRAW" | "NONE";
-
 const Controller = () => {
-  const [gameState, setGameState] = useState<State>(State.PLAYING);
-  const [choice, setChoice] = useState<Choice>("NONE");
-  const [matchResult, setMatchResult] = useState<Result>("NONE");
+  const [choice, setChoice] = useState<PlayerChoice>("NONE");
   // const { id } = useParams();
-  const handleChoice = (choice: Choice) => {
-    setChoice(choice);
-  };
-
-  const executePlay = () => {
-    setGameState(State.CALCULATING);
-    setTimeout(() => {
-      setGameState(State.FINISHED);
-      setMatchResult("DRAW");
-    }, 2000);
-
-    console.log(gameState);
-  };
 
   const getIcon = () => {
     if (choice === "ROCK") return <Rock />;
@@ -39,9 +16,15 @@ const Controller = () => {
     return null;
   };
 
+  const handleChoice = (choice: PlayerChoice) => {
+    setChoice(choice);
+  };
+
+  const { gameState, executePlay, matchResult, restartGame } = useGame();
+
   return (
     <div className="play">
-      {gameState === State.PLAYING && (
+      {gameState === GameState.PLAYING && (
         <>
           <h2>Selecione sua jogada</h2>
           <div className="play__buttons">
@@ -77,10 +60,10 @@ const Controller = () => {
           </div>
         </>
       )}
-      {gameState === State.CALCULATING && (
+      {gameState === GameState.CALCULATING && (
         <Loading text="Aguardando adversário" />
       )}
-      {gameState === State.FINISHED && (
+      {gameState === GameState.FINISHED && (
         <>
           <div className="play__result">
             {matchResult === "YOU_WIN" && (
@@ -119,10 +102,7 @@ const Controller = () => {
             color="primary"
             variant="outlined"
             endIcon={<Reset />}
-            onClick={() => {
-              setGameState(State.PLAYING);
-              setChoice("NONE");
-            }}
+            onClick={() => restartGame(() => setChoice("NONE"))}
           />
         </>
       )}

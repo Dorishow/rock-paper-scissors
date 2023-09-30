@@ -12,17 +12,32 @@ export enum RoomState {
   ERROR_ON_CREATE = "ERROR_ON_CREATE",
 }
 
+export enum GameState {
+  PLAYING = "PLAYING",
+  CALCULATING = "CALCULATING",
+  FINISHED = "FINISHED",
+}
+
+export type PlayerChoice = "ROCK" | "PAPER" | "SCISSORS" | "NONE";
+export type GameResult = "YOU_WIN" | "YOU_LOOSE" | "DRAW" | "NONE";
+
 interface ContextValue {
   roomState: RoomState;
   createRoom: () => void;
   copyLink: () => void;
   getRoom: () => string;
+  gameState: GameState;
+  executePlay: () => void;
+  matchResult: GameResult;
+  restartGame: (onSuccess?: () => void) => void;
 }
 
 const GameContext = createContext({} as ContextValue);
 
 const GameProvider = ({ children }: Props) => {
   const [roomState, setRoomState] = useState<RoomState>(RoomState.NONE);
+  const [gameState, setGameState] = useState<GameState>(GameState.PLAYING);
+  const [matchResult, setMatchResult] = useState<GameResult>("NONE");
 
   const createRoom = () => {
     try {
@@ -42,9 +57,36 @@ const GameProvider = ({ children }: Props) => {
 
   const getRoom = () => `${paths.room.play}/uuid`;
 
-  const providerValue = useMemo(() => ({ createRoom, copyLink, getRoom }), []);
+  const executePlay = () => {
+    setGameState(GameState.CALCULATING);
+    setTimeout(() => {
+      setGameState(GameState.FINISHED);
+      setMatchResult("DRAW");
+    }, 2000);
+
+    console.log(gameState);
+  };
+
+  const restartGame = (onSuccess?: () => void) => {
+    setGameState(GameState.PLAYING);
+    onSuccess?.();
+  };
+
+  const providerValue = useMemo(
+    () => ({
+      createRoom,
+      copyLink,
+      getRoom,
+      executePlay,
+      roomState,
+      gameState,
+      matchResult,
+      restartGame,
+    }),
+    []
+  );
   return (
-    <GameContext.Provider value={{ ...providerValue, roomState }}>
+    <GameContext.Provider value={{ ...providerValue, roomState, gameState }}>
       {children}
     </GameContext.Provider>
   );
